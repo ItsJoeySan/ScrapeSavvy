@@ -12,20 +12,20 @@ const home = () => {
   //   title: "",
   //   currentPrice: "",
   // });
-  const products = async () => {
-    const product = await findProduct();
+  // const products = async () => {
+  //   const product = await findProduct();
 
-    return product;
-    // console.log(product);
-    // if (product)
-    //   setProduct({
-    //     title: product[0].title,
-    //     currentPrice: product[0].currentPrice,
-    //   });
-  };
-  useEffect(() => {
-    products();
-  }, []);
+  //   return product;
+  //   // console.log(product);
+  //   // if (product)
+  //   //   setProduct({
+  //   //     title: product[0].title,
+  //   //     currentPrice: product[0].currentPrice,
+  //   //   });
+  // };
+  // useEffect(() => {
+  //   products();
+  // }, []);
   return (
     <>
       <section className="px-6 md:px-20 py-24 ">
