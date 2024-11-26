@@ -1,4 +1,3 @@
-"use client";
 import Modal from "@/components/Modals";
 import PriceInfoCard from "@/components/PriceInfoCard";
 import ProductCard from "@/components/ProductCard";
