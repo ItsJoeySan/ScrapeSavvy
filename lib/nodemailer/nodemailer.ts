@@ -2,6 +2,7 @@
 
 import { EmailContent, EmailProductInfo, NotificationType } from "@/types";
 import nodemailer from "nodemailer";
+import { resolve } from "path";
 
 const Notification = {
   WELCOME: "WELCOME",
@@ -29,7 +30,7 @@ export async function generateEmailBody(
       subject = `Welcome to Price Tracking for ${shortenedTitle}`;
       body = `
         <div>
-          <h2>Welcome to PriceWise 🚀</h2>
+          <h2>Welcome to ScrapeSavvy 🚀</h2>
           <p>You are now tracking ${product.title}.</p>
           <p>Stay tuned for more updates on ${product.title} and other products you're tracking.</p>
         </div>
@@ -76,11 +77,23 @@ export async function generateEmailBody(
 const transporter = nodemailer.createTransport({
   pool: true,
   service: "gmail",
+  secure: true,
   auth: {
     user: process.env.EMAIL_USERNAME, // Gmail address
     pass: process.env.EMAIL_PASSWORD, // Gmail app password
   },
-  maxConnections: 1, // Optional, specify the max number of connections
+});
+
+await new Promise((resolve, reject) => {
+  transporter.verify(function (error: any, success: any) {
+    if (error) {
+      console.log(error);
+      reject(error);
+    } else {
+      console.log("Server is ready to take our messages");
+      resolve(success);
+    }
+  });
 });
 
 export const sendEmail = async (
