@@ -3,6 +3,7 @@
 import { scrapeAndStoreProduct } from "@/lib/actions";
 import { FormEvent, useState } from "react";
 import createProduct from "@/lib/actions/createProduct";
+import { useRouter } from "next/navigation";
 
 const isValidAmazonProductURL = (url: string) => {
   try {
@@ -27,6 +28,7 @@ const Searchbar = () => {
   const [searchPrompt, setSearchPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const router = useRouter();
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -45,10 +47,9 @@ const Searchbar = () => {
       console.log("Scraped product returned to handleSubmit:", product); // Add this
 
       const result = await createProduct(searchPrompt);
-      if (!result) {
-        console.log("Product creation failed");
-      } else {
-        console.log("Product created:", result);
+
+      if (result) {
+        router.push(`/products/${result.id}`);
       }
     } catch (error) {
       console.error("Error in handleSubmit:", error);

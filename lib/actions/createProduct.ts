@@ -3,6 +3,8 @@
 import { prisma } from "../prismaClient/prisma";
 import { scrapeAmazonProduct } from "../scraper";
 import { getAveragePrice, getHighestPrice, getLowestPrice } from "../utils";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 //get existing product
 //if it exists, check the price history of that particular product
@@ -46,8 +48,10 @@ const createProduct = async (url: string) => {
     }
 
     const result = await prisma.product.create({ data: scrapedProduct });
-    console.log("Product created:", result);
     return result;
+    // return NextResponse.redirect(
+    //   `http://locallhost:3000/products/${result.id}`
+    // );
   } catch (error) {
     console.log("error on createProduct", error);
   }

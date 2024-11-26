@@ -6,6 +6,7 @@ import { getAllProducts } from "@/lib/actions/getProduct";
 
 const home = async () => {
   const allProducts = await getAllProducts();
+  console.log(allProducts);
   return (
     <>
       <section className="px-6 md:px-20 py-24 ">
