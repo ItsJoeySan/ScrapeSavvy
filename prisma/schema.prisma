@@ -9,7 +9,7 @@ generator client {
 
 model user {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  email     String   @unique
+  email     String
   Product   Product? @relation(fields: [productId], references: [id])
   productId String?  @db.ObjectId
 }

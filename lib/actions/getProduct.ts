@@ -1,5 +1,6 @@
 "use server";
 
+import { generateEmailBody, sendEmail } from "../nodemailer/nodemailer";
 import { prisma } from "../prismaClient/prisma";
 
 export const getAllProducts = async () => {
@@ -40,7 +41,7 @@ export const addUserEmailToProduct = async (
     },
   });
 
-  if (alradyExists) {
+  if (alradyExists?.productId === productId) {
     console.log("User already Tracked for this product");
     return alradyExists;
   }
@@ -57,6 +58,9 @@ export const addUserEmailToProduct = async (
       },
     },
   });
+
+  const emailContent = await generateEmailBody(addedUserEmail, "WELCOME");
+  await sendEmail(emailContent, [email]);
 
   return addedUserEmail;
 };
