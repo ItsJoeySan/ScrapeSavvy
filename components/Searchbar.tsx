@@ -44,8 +44,12 @@ const Searchbar = () => {
 
       console.log("Scraped product returned to handleSubmit:", product); // Add this
 
-      const result = await createProduct(product);
-      console.log("Product created:", result);
+      const result = await createProduct(searchPrompt);
+      if (!result) {
+        console.log("Product creation failed");
+      } else {
+        console.log("Product created:", result);
+      }
     } catch (error) {
       console.error("Error in handleSubmit:", error);
     } finally {

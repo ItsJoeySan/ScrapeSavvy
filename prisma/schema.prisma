@@ -7,8 +7,37 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model user {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId String?  @db.ObjectId
+}
+
 model Product {
-  id           String @id @default(auto()) @map("_id") @db.ObjectId
-  title        String
-  currentPrice String
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  url           String
+  currency      String
+  image         String
+  title         String
+  currentPrice  Int
+  originalPrice Int
+  priceHistory  PriceHistory[]
+  lowestPrice   Int
+  highestPrice  Int
+  averagePrice  Int
+  discountRate  Int
+  description   String
+  category      String
+  reviewsCount  Int
+  isOutOfStock  Boolean?
+  user          user[]
+}
+
+model PriceHistory {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  price     Int
+  createdAt DateTime @default(now())
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId String?  @db.ObjectId
 }
